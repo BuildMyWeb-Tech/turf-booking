@@ -10,11 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TurfsRouteImport } from './routes/turfs'
+import { Route as MyBookingsRouteImport } from './routes/my-bookings'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TurfsTurfIdRouteImport } from './routes/turfs.$turfId'
 
 const TurfsRoute = TurfsRouteImport.update({
   id: '/turfs',
   path: '/turfs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBookingsRoute = MyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,31 +35,47 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TurfsTurfIdRoute = TurfsTurfIdRouteImport.update({
+  id: '/$turfId',
+  path: '/$turfId',
+  getParentRoute: () => TurfsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/turfs': typeof TurfsRoute
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/turfs': typeof TurfsRouteWithChildren
+  '/turfs/$turfId': typeof TurfsTurfIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/turfs': typeof TurfsRoute
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/turfs': typeof TurfsRouteWithChildren
+  '/turfs/$turfId': typeof TurfsTurfIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/turfs': typeof TurfsRoute
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/turfs': typeof TurfsRouteWithChildren
+  '/turfs/$turfId': typeof TurfsTurfIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/turfs'
+  fullPaths: '/' | '/login' | '/my-bookings' | '/turfs' | '/turfs/$turfId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/turfs'
-  id: '__root__' | '/' | '/turfs'
+  to: '/' | '/login' | '/my-bookings' | '/turfs' | '/turfs/$turfId'
+  id: '__root__' | '/' | '/login' | '/my-bookings' | '/turfs' | '/turfs/$turfId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TurfsRoute: typeof TurfsRoute
+  LoginRoute: typeof LoginRoute
+  MyBookingsRoute: typeof MyBookingsRoute
+  TurfsRoute: typeof TurfsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +87,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TurfsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my-bookings': {
+      id: '/my-bookings'
+      path: '/my-bookings'
+      fullPath: '/my-bookings'
+      preLoaderRoute: typeof MyBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -65,12 +108,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/turfs/$turfId': {
+      id: '/turfs/$turfId'
+      path: '/$turfId'
+      fullPath: '/turfs/$turfId'
+      preLoaderRoute: typeof TurfsTurfIdRouteImport
+      parentRoute: typeof TurfsRoute
+    }
   }
 }
 
+interface TurfsRouteChildren {
+  TurfsTurfIdRoute: typeof TurfsTurfIdRoute
+}
+
+const TurfsRouteChildren: TurfsRouteChildren = {
+  TurfsTurfIdRoute: TurfsTurfIdRoute,
+}
+
+const TurfsRouteWithChildren = TurfsRoute._addFileChildren(TurfsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TurfsRoute: TurfsRoute,
+  LoginRoute: LoginRoute,
+  MyBookingsRoute: MyBookingsRoute,
+  TurfsRoute: TurfsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
