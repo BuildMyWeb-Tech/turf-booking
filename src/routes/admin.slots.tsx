@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { store, isSlotBooked, type Booking } from "@/lib/mock-data";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Ban, Wrench } from "lucide-react";
 
@@ -87,8 +87,8 @@ function SlotManagement() {
                   <div key={d} className="p-2 text-center text-xs font-semibold">{fmtDate(d)}</div>
                 ))}
                 {hours.map((h) => (
-                  <>
-                    <div key={`hr-${h}`} className="border-t border-border p-2 text-xs text-muted-foreground">{fmtHour(h)}</div>
+                  <Fragment key={`row-${h}`}>
+                    <div className="border-t border-border p-2 text-xs text-muted-foreground">{fmtHour(h)}</div>
                     {days.map((d) => {
                       const booking = isSlotBooked(bookings, turf.id, d, h);
                       const isMaint = booking?.customerName === "Maintenance Block";
@@ -109,7 +109,7 @@ function SlotManagement() {
                         </button>
                       );
                     })}
-                  </>
+                  </Fragment>
                 ))}
               </div>
             </div>
