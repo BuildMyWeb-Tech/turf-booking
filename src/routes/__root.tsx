@@ -76,10 +76,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Discover and book sports turfs near you in seconds. Built for players and turf owners." },
       { name: "author", content: "Turfly" },
       { property: "og:title", content: "Turfly — Modern Turf Booking Platform" },
-      { property: "og:description", content: "Discover and book sports turfs near you in seconds." },
+      { property: "og:description", content: "Discover and book sports turfs near you in seconds. Built for players and turf owners." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Turfly — Modern Turf Booking Platform" },
+      { name: "twitter:description", content: "Discover and book sports turfs near you in seconds. Built for players and turf owners." },
     ],
     links: [
       {
