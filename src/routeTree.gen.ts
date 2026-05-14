@@ -9,38 +9,192 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TurfsRouteImport } from './routes/turfs'
+import { Route as MyBookingsRouteImport } from './routes/my-bookings'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as TurfsTurfIdRouteImport } from './routes/turfs.$turfId'
+import { Route as AdminTurfsRouteImport } from './routes/admin.turfs'
+import { Route as AdminSlotsRouteImport } from './routes/admin.slots'
+import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 
+const TurfsRoute = TurfsRouteImport.update({
+  id: '/turfs',
+  path: '/turfs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBookingsRoute = MyBookingsRouteImport.update({
+  id: '/my-bookings',
+  path: '/my-bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const TurfsTurfIdRoute = TurfsTurfIdRouteImport.update({
+  id: '/$turfId',
+  path: '/$turfId',
+  getParentRoute: () => TurfsRoute,
+} as any)
+const AdminTurfsRoute = AdminTurfsRouteImport.update({
+  id: '/turfs',
+  path: '/turfs',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSlotsRoute = AdminSlotsRouteImport.update({
+  id: '/slots',
+  path: '/slots',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/bookings',
+  path: '/bookings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/turfs': typeof TurfsRouteWithChildren
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/slots': typeof AdminSlotsRoute
+  '/admin/turfs': typeof AdminTurfsRoute
+  '/turfs/$turfId': typeof TurfsTurfIdRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/turfs': typeof TurfsRouteWithChildren
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/slots': typeof AdminSlotsRoute
+  '/admin/turfs': typeof AdminTurfsRoute
+  '/turfs/$turfId': typeof TurfsTurfIdRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/login': typeof LoginRoute
+  '/my-bookings': typeof MyBookingsRoute
+  '/turfs': typeof TurfsRouteWithChildren
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/slots': typeof AdminSlotsRoute
+  '/admin/turfs': typeof AdminTurfsRoute
+  '/turfs/$turfId': typeof TurfsTurfIdRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/my-bookings'
+    | '/turfs'
+    | '/admin/analytics'
+    | '/admin/bookings'
+    | '/admin/slots'
+    | '/admin/turfs'
+    | '/turfs/$turfId'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/my-bookings'
+    | '/turfs'
+    | '/admin/analytics'
+    | '/admin/bookings'
+    | '/admin/slots'
+    | '/admin/turfs'
+    | '/turfs/$turfId'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/login'
+    | '/my-bookings'
+    | '/turfs'
+    | '/admin/analytics'
+    | '/admin/bookings'
+    | '/admin/slots'
+    | '/admin/turfs'
+    | '/turfs/$turfId'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  MyBookingsRoute: typeof MyBookingsRoute
+  TurfsRoute: typeof TurfsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/turfs': {
+      id: '/turfs'
+      path: '/turfs'
+      fullPath: '/turfs'
+      preLoaderRoute: typeof TurfsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-bookings': {
+      id: '/my-bookings'
+      path: '/my-bookings'
+      fullPath: '/my-bookings'
+      preLoaderRoute: typeof MyBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +202,86 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/turfs/$turfId': {
+      id: '/turfs/$turfId'
+      path: '/$turfId'
+      fullPath: '/turfs/$turfId'
+      preLoaderRoute: typeof TurfsTurfIdRouteImport
+      parentRoute: typeof TurfsRoute
+    }
+    '/admin/turfs': {
+      id: '/admin/turfs'
+      path: '/turfs'
+      fullPath: '/admin/turfs'
+      preLoaderRoute: typeof AdminTurfsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/slots': {
+      id: '/admin/slots'
+      path: '/slots'
+      fullPath: '/admin/slots'
+      preLoaderRoute: typeof AdminSlotsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/bookings': {
+      id: '/admin/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminBookingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminSlotsRoute: typeof AdminSlotsRoute
+  AdminTurfsRoute: typeof AdminTurfsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminBookingsRoute: AdminBookingsRoute,
+  AdminSlotsRoute: AdminSlotsRoute,
+  AdminTurfsRoute: AdminTurfsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface TurfsRouteChildren {
+  TurfsTurfIdRoute: typeof TurfsTurfIdRoute
+}
+
+const TurfsRouteChildren: TurfsRouteChildren = {
+  TurfsTurfIdRoute: TurfsTurfIdRoute,
+}
+
+const TurfsRouteWithChildren = TurfsRoute._addFileChildren(TurfsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  LoginRoute: LoginRoute,
+  MyBookingsRoute: MyBookingsRoute,
+  TurfsRoute: TurfsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
