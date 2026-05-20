@@ -81,7 +81,7 @@ function TurfDetailPage() {
   const handleBookClick = () => {
     if (!user) {
       toast.error("Please sign in to book", { description: "Use customer@test.com / password" });
-      navigate({ to: "/login" });
+      navigate({ to: "/login", search: { redirect: `/turfs/${turf.id}` } });
       return;
     }
     if (selectedHour == null) {

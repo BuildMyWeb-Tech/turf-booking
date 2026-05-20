@@ -9,6 +9,9 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/login")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
   component: LoginPage,
   head: () => ({ meta: [{ title: "Sign in — Turfly" }] }),
 });
@@ -16,6 +19,7 @@ export const Route = createFileRoute("/login")({
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { redirect } = Route.useSearch();
   const [email, setEmail] = useState("customer@test.com");
   const [password, setPassword] = useState("password");
 
@@ -25,6 +29,7 @@ function LoginPage() {
     if (!r.ok) { toast.error(r.error ?? "Login failed"); return; }
     toast.success("Welcome back!");
     if (email === "admin@test.com") navigate({ to: "/admin" });
+    else if (redirect?.startsWith("/turfs/")) navigate({ to: "/turfs/$turfId", params: { turfId: redirect.replace("/turfs/", "") } });
     else navigate({ to: "/" });
   };
 
