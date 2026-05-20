@@ -82,12 +82,14 @@ function TurfsPage() {
           <div className="grid gap-5 sm:grid-cols-2">
             {filtered.map((t) => (
               <Card key={t.id} className="group overflow-hidden p-0 transition-all hover:-translate-y-0.5 hover:shadow-md">
-                <Link to="/turfs/$turfId" params={{ turfId: t.id }}>
+                <Link to="/turfs/$turfId" params={{ turfId: t.id }} className="block">
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img src={t.image} alt={t.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <Badge className="absolute left-3 top-3 bg-background/90 text-foreground hover:bg-background">{t.sport}</Badge>
                   </div>
-                  <CardContent className="p-4">
+                </Link>
+                <CardContent className="p-4">
+                  <Link to="/turfs/$turfId" params={{ turfId: t.id }} className="block">
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0">
                         <h3 className="truncate font-semibold">{t.name}</h3>
@@ -99,15 +101,17 @@ function TurfsPage() {
                         <Star className="h-3 w-3 fill-current" /> {t.rating}
                       </div>
                     </div>
-                    <div className="mt-4 flex items-center justify-between">
-                      <div>
-                        <span className="text-lg font-bold">{formatINR(t.pricePerHour)}</span>
-                        <span className="text-xs text-muted-foreground">/hour</span>
-                      </div>
-                      <Button size="sm">Book</Button>
+                  </Link>
+                  <div className="mt-4 flex items-center justify-between">
+                    <div>
+                      <span className="text-lg font-bold">{formatINR(t.pricePerHour)}</span>
+                      <span className="text-xs text-muted-foreground">/hour</span>
                     </div>
-                  </CardContent>
-                </Link>
+                    <Button size="sm" asChild>
+                      <Link to="/turfs/$turfId" params={{ turfId: t.id }}>Book</Link>
+                    </Button>
+                  </div>
+                </CardContent>
               </Card>
             ))}
             {filtered.length === 0 && (
